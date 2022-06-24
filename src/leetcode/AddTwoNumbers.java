@@ -10,6 +10,8 @@ import examination.basic.ListNode;
  */
 public class AddTwoNumbers {
 
+    // idea: Control + C 切换到命令模式；  键入i,切换成编辑模式；
+
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         return null;
     }
