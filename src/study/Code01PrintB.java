@@ -8,19 +8,28 @@ package study;
  */
 public class Code01PrintB {
 
-    public static void print(int number) {
+    public static String print(int number) {
         StringBuilder sb = new StringBuilder();
         // 正式因为底层十进制就是二进制数
         for (int i = 0; i < Integer.SIZE; i++) {
             sb.insert(0, (number & (1 << i)) == 0 ? 0 : 1);
         }
-        System.out.println(sb);
+        return sb.toString();
     }
 
     public static void main(String[] args) {
-        print(1);
-        print(2);
-        print(3);
-        print(4);
+
+
+        int a = 1;
+        int b = 2;
+        int c = -1;
+        System.out.println("a|b : " + print(a | b));
+        System.out.println("a&b : " + print(a & b));
+        System.out.println("a^b : " + print(a ^ b));
+        System.out.println("~a : " + print(~a));
+        System.out.println("~c : " + print(~c));
+        System.out.println(print(-2));
+
+
     }
 }
