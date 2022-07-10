@@ -6,7 +6,7 @@ package study;
  * @author sunkangchao
  * @date 2022/7/4 01:17
  */
-public class Code02CalcN {
+public class Code02_CalcN {
 
     /**
      * 暴力解法，依次计算每一项的阶乘

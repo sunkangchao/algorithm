@@ -6,7 +6,7 @@ package study;
  * @author huey.sun
  * @date 2022/7/2 23:51
  */
-public class Code01PrintB {
+public class Code01_PrintB {
 
     public static String print(int number) {
         StringBuilder sb = new StringBuilder();
