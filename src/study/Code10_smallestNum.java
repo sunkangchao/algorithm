@@ -5,6 +5,7 @@ import study.util.PrintArray;
 import java.util.concurrent.Callable;
 import java.util.concurrent.DelayQueue;
 import java.util.concurrent.FutureTask;
+import java.util.concurrent.SynchronousQueue;
 
 /**
  * 局部最小值的索引
