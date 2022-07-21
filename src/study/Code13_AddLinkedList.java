@@ -128,7 +128,6 @@ public class Code13_AddLinkedList {
             System.out.print(targetHead.value + " ");
             targetHead = targetHead.next;
         }
-        Arrays.sort();
 
     }
 
