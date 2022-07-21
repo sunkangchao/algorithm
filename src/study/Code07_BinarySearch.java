@@ -8,7 +8,7 @@ import study.util.GenerateArray;
  * @author sunkangchao
  * @date 2022/7/7 01:41
  */
-public class Code07 {
+public class Code07_BinarySearch {
 
     /** 
      * 二分查找法

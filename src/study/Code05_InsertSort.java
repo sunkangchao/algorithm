@@ -6,7 +6,7 @@ package study;
  * @author sunkangchao
  * @date 2022/7/5 03:26
  */
-public class Code05 {
+public class Code05_InsertSort {
 
     public static void sort(int[] arr) {
         if (arr == null || arr.length < 2) {

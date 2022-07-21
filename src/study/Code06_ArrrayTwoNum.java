@@ -6,7 +6,7 @@ package study;
  * @author sunkangchao
  * @date 2022/7/5 15:57
  */
-public class Code06 {
+public class Code06_ArrrayTwoNum {
 
     private static int[] arr = {1,4,3,2,6,7,2,3,8,9};
     private static int[][] sum = new int[arr.length][arr.length];

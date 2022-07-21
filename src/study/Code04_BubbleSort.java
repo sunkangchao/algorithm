@@ -6,7 +6,7 @@ package study;
  * @author sunkangchao
  * @date 2022/7/5 02:57
  */
-public class Code04 {
+public class Code04_BubbleSort {
 
     public static void sort(int[] arr) {
         if (arr == null || arr.length < 2) {
