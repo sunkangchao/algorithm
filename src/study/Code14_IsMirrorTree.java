@@ -1,6 +1,7 @@
 package study;
 
 import study.base.GenerateTreeNode;
+import study.base.TreeNode;
 
 import java.util.Objects;
 
@@ -70,6 +71,20 @@ public class Code14_IsMirrorTree {
         return Math.max(leftDepth, rightDepth) + 1;
     }
 
+
+    public boolean isMirror(TreeNode root) {
+        return isMirror(root, root);
+    }
+
+    public boolean isMirror(TreeNode root1, TreeNode root2) {
+        if (root1 == null ^ root2 == null) {
+            return false;
+        }
+        if (root1 == null) {
+            return true;
+        }
+        return root1.val == root2.val && isMirror(root1.left, root2.right) && isMirror(root1.right, root2.left);
+    }
 
     public static void main(String[] args) {
         GenerateTreeNode<Integer> head = new GenerateTreeNode<Integer>(1);
