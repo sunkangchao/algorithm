@@ -17,7 +17,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class PrintArray {
 
     public static void printArray(int[] arr) {
-        System.out.print("arr数组为: ");
+        System.out.print("arr: ");
         for (int temp : arr) {
             System.out.print(temp + " ");
         }
