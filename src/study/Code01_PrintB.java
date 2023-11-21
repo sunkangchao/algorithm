@@ -17,6 +17,17 @@ public class Code01_PrintB {
         return sb.toString();
     }
 
+    public static String printBinaryString(int number) {
+
+        // 以此循环每一位 每一位与1相与 不为0则取出拼接1 否则拼接0
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < Integer.SIZE; i++) {
+            char bit = ((number & (1 << i)) == 0) ? '0' : '1';
+            sb.insert(0, bit);
+        }
+        return sb.toString();
+    }
+
     public static void main(String[] args) {
 
 
@@ -30,6 +41,13 @@ public class Code01_PrintB {
         System.out.println("~c : " + print(~c));
         System.out.println(print(-2));
 
+        System.out.println("================================================================");
+        int i = 4;
+        System.out.println("i: " + printBinaryString(i));
+
 
     }
+
+
+
 }

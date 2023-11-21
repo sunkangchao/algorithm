@@ -40,6 +40,16 @@ public class Code02_CalcN {
         return result;
     }
 
+    public static long calculate3(int n) {
+        long result = 0;
+        long lastResult = 1;
+        for (int i = 1; i <= n; i++) {
+            lastResult = lastResult * i;
+            result += lastResult;
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
         System.out.println(calculate2(1));;
         System.out.println(calculate2(2));
