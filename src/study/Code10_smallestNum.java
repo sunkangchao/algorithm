@@ -8,7 +8,7 @@ import java.util.concurrent.FutureTask;
 import java.util.concurrent.SynchronousQueue;
 
 /**
- * 局部最小值的索引
+ * 局部最小值的索引(任意返回一个)
  *
  * @author sunkangchao
  * @date 2022/7/8 03:58
