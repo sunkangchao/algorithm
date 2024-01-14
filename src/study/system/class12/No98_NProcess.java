@@ -7,7 +7,7 @@ package study.system.class12;
  * @author sunkangchao
  * @since 2024/1/14 05:02
  */
-public class NProcess {
+public class No98_NProcess {
 
 
 
@@ -28,7 +28,7 @@ public class NProcess {
     }
 
     public static void main(String[] args) {
-        NProcess instance = new NProcess();
+        No98_NProcess instance = new No98_NProcess();
         instance.nProcess(3);
     }
 
