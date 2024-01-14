@@ -1,6 +1,13 @@
 package study.newhand;
 
 
+import study.util.PrintArray;
+
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+
+
 /**
  * 快排
  *
@@ -39,6 +46,38 @@ public class Code28_PartitionAndQuickSort {
         // 继续递归下去
         partitionAndQuickSort(arr, l, t1 - 1);
         partitionAndQuickSort(arr, t1 + 1, r);
+    }
+
+    public static void partitionAndQuickSort2(int[] arr, int l, int r) {
+        if (l >= r) {
+            return;
+        }
+        int temp = arr[l];
+        int t1 = l, t2 = r;
+        while (t1 < t2) {
+            while (t1 < t2 && arr[t2] >= temp) {
+                t2--;
+            }
+
+            if (t1 < t2) {
+                arr[t1] = arr[t2];
+                t1++;
+            }
+
+            while (t1 < t2 && arr[t1] < temp) {
+                t1++;
+            }
+
+            if (t1 < t2) {
+                arr[t2] = arr[t1];
+                t2--;
+            }
+
+        }
+        // 需要考虑值相等的情况
+        arr[t1] = temp;
+        partitionAndQuickSort2(arr, l, t1 - 1);
+        partitionAndQuickSort2(arr, t2 + 1, r);
     }
 
 
@@ -83,6 +122,13 @@ public class Code28_PartitionAndQuickSort {
 
 
     public static void main(String[] args) {
+        int[] arr = {4,4,4,4,4,4,4,4,4};
+        partitionAndQuickSort2(arr, 0, arr.length - 1);
+        PrintArray.printArray(arr);
+
+        // 如何获取系统的ZoneOffset对象，如何获取指定ZondId的时区偏移
+        ZoneOffset zoneOffset = ZoneId.of("Asia/Shanghai").getRules().getOffset(Instant.ofEpochSecond(33333));
+        System.out.println(zoneOffset);
 
     }
 

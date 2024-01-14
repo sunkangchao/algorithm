@@ -31,9 +31,31 @@ public class Code08_FindLeftestIndex {
         }
     }
 
+    public static int findMinIndex(int[] arr, int target) {
+        if (arr == null || arr.length == 0) {
+            return -1;
+        }
+        int left = 0;
+        int right = arr.length - 1;
+        int minIndex = -1;
+        while (left <= right) {
+            int midIndex = (left + right) / 2;
+            if (target == arr[midIndex]) {
+                minIndex = midIndex;
+                right = midIndex - 1;
+            } else if (target < arr[midIndex]) {
+                right = midIndex - 1;
+            } else {
+                left = midIndex + 1;
+            }
+        }
+        return minIndex;
+    }
+
+
     public static void main(String[] args) {
         int[] arr = {1,1,1,2,2,2,3,4,4,5,5,6,7};
-        System.out.println(findLeftestIndex(arr, 8));
+        System.out.println(findMinIndex(arr, 1));
     }
 
 
