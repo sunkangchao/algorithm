@@ -28,10 +28,7 @@ public class No97_NodeSuccessor {
             node = parent;
             parent = node.parent;
         }
-        if (node.parent == null) {
-            return node;
-        }
-        return node.parent.left;
+        return parent;
 
     }
 
