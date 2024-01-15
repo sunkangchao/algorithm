@@ -7,13 +7,13 @@ import java.util.Queue;
 
 /**
  * 判断是否为完全二叉树
- * IsCompletedTree
+ * No99_IsCompletedTree
  *
  * @author sunkangchao
  * @version 1.0
  * @since <pre>01月 15, 2024</pre>
  */
-public class IsCompletedTree {
+public class No99_IsCompletedTree {
 
 
     public boolean isCompletedTree(TreeNode head) {
