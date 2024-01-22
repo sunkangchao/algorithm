@@ -1,7 +1,7 @@
 package study.system.class16;
 
 /**
- * 广度优先遍历
+ * 深度优先遍历
  * No126_02FriendCycles
  *
  * @author sunkangchao
