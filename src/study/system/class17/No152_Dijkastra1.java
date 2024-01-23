@@ -59,5 +59,44 @@ public class No152_Dijkastra1 {
         return minNode;
     }
 
+    public Map<Node, Integer> getMinDistance2(Node from) {
+        Map<Node, Integer> distanceMap = new HashMap<>();
+        Set<Node> selectedNode = new HashSet<>();
+        distanceMap.put(from, 0);
+        Node minNode = getMinDistanceAndUnselectedNode2(distanceMap, selectedNode);
+
+        while (minNode != null) {
+            Integer distance = distanceMap.get(minNode);
+            for (Edge edge : minNode.edges) {
+                Node toNode = edge.to;
+                if (!distanceMap.containsKey(toNode)) {
+                    distanceMap.put(toNode, distance + edge.weight);
+                } else {
+                    distanceMap.put(toNode, Math.min(distanceMap.get(toNode), distance + edge.weight));
+                }
+            }
+            selectedNode.add(minNode);
+            minNode = getMinDistanceAndUnselectedNode2(distanceMap, selectedNode);
+        }
+        return distanceMap;
+    }
+
+    private Node getMinDistanceAndUnselectedNode2(Map<Node, Integer> distanceMap, Set<Node> selectedNode) {
+        Node minNode = null;
+        int minDistance = Integer.MAX_VALUE;
+        // 遍历每一个可达的节点
+        for (Map.Entry<Node, Integer> entry : distanceMap.entrySet()) {
+            Node node = entry.getKey();
+            Integer distance = entry.getValue();
+            if (!selectedNode.contains(node) && distance < minDistance) {
+                minNode = node;
+                minDistance = distance;
+            }
+        }
+        return minNode;
+    }
+
+
+
 
 }
