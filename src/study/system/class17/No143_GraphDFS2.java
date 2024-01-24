@@ -8,7 +8,7 @@ import java.util.Stack;
 
 /**
  *
- * 递归方式实现-图的深度优先遍历
+ * 非递归方式实现-图的深度优先遍历
  * No143_GraphDFS2
  *
  * @author sunkangchao
