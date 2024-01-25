@@ -22,14 +22,25 @@ public class No98_NProcess {
         if (times > n) {
             return;
         }
-        process(times + 1, n, false);
-        System.out.print(down ? "凹 " : "凸 ");
         process(times + 1, n, true);
+        System.out.print(down ? "凹 " : "凸 ");
+        process(times + 1, n, false);
     }
 
     public static void main(String[] args) {
-        No98_NProcess instance = new No98_NProcess();
-        instance.nProcess(3);
+//        No98_NProcess instance = new No98_NProcess();
+//        instance.nProcess(3);
+        process2(3, false);
+
+    }
+
+    static void process2(int times, boolean up) {
+        if (times == 0) {
+            return;
+        }
+        process2(times - 1, false);
+        System.out.println(up ? "凸" : "凹 ");
+        process2(times - 1, true);
     }
 
 
