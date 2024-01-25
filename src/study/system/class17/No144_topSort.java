@@ -40,6 +40,7 @@ public class No144_topSort {
         List<DirectedGraphNode> result = new ArrayList<>();
         while (!zeroInQueue.isEmpty()) {
             DirectedGraphNode polled = zeroInQueue.poll();
+            result.add(polled);
             for (DirectedGraphNode next : polled.nextList) {
                 inMap.put(next, inMap.get(next) + 1);
                 if (inMap.get(next) == 0) {

@@ -65,7 +65,7 @@ public class No148_KruskalMST {
         public void union(Node node1, Node node2) {
             Node parent1 = findParent(node1);
             Node parent2 = findParent(node2);
-            if (parent1 != parent1) {
+            if (parent1 != parent2) {
                 Integer size1 = sizeMap.get(parent1);
                 Integer size2 = sizeMap.get(parent2);
                 Node head = size1 > size2 ? parent1 : parent2;
