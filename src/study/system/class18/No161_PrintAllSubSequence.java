@@ -1,4 +1,4 @@
-package study.system.class17;
+package study.system.class18;
 
 /**
  * No161_PrintAllSubSequence
