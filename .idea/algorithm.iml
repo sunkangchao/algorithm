@@ -8,5 +8,8 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="netty-all-4.1.65.Final" level="project" />
+    <orderEntry type="library" name="codecamp-client-1.9.102-20240401.063811-5" level="project" />
+    <orderEntry type="library" name="codemao-common-definition-2.0.4-20220607.085628-1" level="project" />
+    <orderEntry type="library" name="lbk-crm-teacher-service-api-1.4.0-RELEASE" level="project" />
   </component>
 </module>
