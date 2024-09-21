@@ -8,5 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="netty-all-4.1.65.Final" level="project" />
+    <orderEntry type="library" name="codecamp-marketing-client-2.5.8-20231222.035316-20" level="project" />
   </component>
 </module>
