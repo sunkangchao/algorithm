@@ -39,4 +39,23 @@ public class No142_GraphDFS {
         }
     }
 
+    public void bfs2(Node root) {
+        if (root == null) {
+            return;
+        }
+        Set<Node> touched = new HashSet<>();
+        touched.add(root);
+        bfs(root, touched);
+    }
+
+    private void bfs2(Node root, Set<Node> touched) {
+        System.out.println(root.value);
+        for (Node nextNode : root.nextList) {
+            if (!touched.contains(nextNode)) {
+                touched.add(nextNode);
+                bfs(nextNode, touched);
+            }
+        }
+    }
+
 }

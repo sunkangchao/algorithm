@@ -8,7 +8,7 @@ import java.util.Stack;
 
 /**
  *
- * 递归方式实现-图的深度优先遍历
+ * 非递归方式实现-图的深度优先遍历
  * No143_GraphDFS2
  *
  * @author sunkangchao
@@ -18,7 +18,7 @@ import java.util.Stack;
 public class No143_GraphDFS2 {
 
 
-    public void bfs(Node root) {
+    public void dfs(Node root) {
         if (root == null) {
             return;
         }
@@ -39,6 +39,28 @@ public class No143_GraphDFS2 {
                     stack.push(popped);
                     stack.push(node);
                     System.out.println(node.value);
+                }
+            }
+        }
+    }
+
+    public void dfs2(Node root) {
+        if (root == null) {
+            return;
+        }
+        Set<Node> touched = new HashSet<>();
+        Stack<Node> stack = new Stack<>();
+        stack.push(root);
+        touched.add(root);
+
+        while (!stack.isEmpty()) {
+            Node node = stack.pop();
+            for (Node nextNode : node.nextList) {
+                if (!touched.contains(nextNode)) {
+                    stack.push(node);
+                    stack.push(nextNode);
+                    System.out.println(node.value);
+                    touched.add(nextNode);
                 }
             }
         }

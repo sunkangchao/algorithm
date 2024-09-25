@@ -44,6 +44,25 @@ public class No141_GraphBFS {
         }
     }
 
+    public void bfs2(Node root) {
+        if (root == null) {
+            return;
+        }
+        Queue<Node> queue = new LinkedList();
+        Set<Node> visited = new HashSet<>();
+        queue.add(root);
+        visited.add(root);
+        while (!queue.isEmpty()) {
+            Node node = queue.poll();
+            for (Node nextNode : node.nextList) {
+                if (!visited.contains(nextNode)) {
+                    queue.add(nextNode);
+                    visited.add(nextNode);
+                }
+            }
+        }
+    }
+
 
 
 }
