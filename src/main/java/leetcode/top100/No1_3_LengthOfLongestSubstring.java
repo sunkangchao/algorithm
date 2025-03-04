@@ -5,13 +5,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * No3_LengthOfLongestSubstring
+ * No1_3_LengthOfLongestSubstring
  *
  * @author sunkangchao
  * @version 1.0
  * @since <pre>03月 04, 2025</pre>
  */
-public class No3_LengthOfLongestSubstring {
+public class No1_3_LengthOfLongestSubstring {
 
 
     public int lengthOfLongestSubstring(String s) {
@@ -56,7 +56,7 @@ public class No3_LengthOfLongestSubstring {
 
     public static void main(String[] args) {
         String s = " ";
-        No3_LengthOfLongestSubstring instance = new No3_LengthOfLongestSubstring();
+        No1_3_LengthOfLongestSubstring instance = new No1_3_LengthOfLongestSubstring();
         int result = instance.lengthOfLongestSubstring(s);
         System.out.println(result);
     }
