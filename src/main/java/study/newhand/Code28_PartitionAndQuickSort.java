@@ -122,7 +122,7 @@ public class Code28_PartitionAndQuickSort {
 
 
     public static void main(String[] args) {
-        int[] arr = {4,4,4,4,4,4,4,4,4};
+        int[] arr = {4,1,5,2,6,3,7};
         partitionAndQuickSort2(arr, 0, arr.length - 1);
         PrintArray.printArray(arr);
 
