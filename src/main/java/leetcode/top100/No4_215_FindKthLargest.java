@@ -1,4 +1,4 @@
-package leetcode.top100.base;
+package leetcode.top100;
 
 import study.util.PrintArray;
 
@@ -11,37 +11,42 @@ public class No4_215_FindKthLargest {
 
 
     public int findKthLargest(int[] nums, int k) {
-        return findKthLargest(nums, k, 0, nums.length - 1);
+        int n = nums.length;
+        return findKthLargest(nums, n - k, 0, n - 1);
     }
 
+
+    /**
+     * 第一种解法
+     * 平均时间复杂度 nlogn 空间复杂度取决于递归栈的深度 logn
+     * @param nums
+     * @param k
+     * @param l
+     * @param r
+     * @return
+     */
     // 返回值为第K大的数值
     public int findKthLargest(int[] nums, int k, int l, int r) {
         // 递归出口 找不到就返回-1？出口条件完善了吗 还有哪些情况没有考虑？
-        if (l > r) {
-            return -1;
+        if (l == r) {
+            // 一直二分法查找 此时只排除剩余最后一个 那这一个必然是答案
+            return nums[k];
         }
 
-        // 使用快排方法
-        int len = nums.length;
+        // 每次取中间的元素作为基准值 使其复杂度更偏向于理想
+        swap(nums, l, (l + r) / 2);
 
-        int baseValueIndex = splitArrByBaseValue(l, nums, l, r);
+        int j = splitArrByBaseValue(l, nums, l, r);
         // 找到找到基准值恰好位于N-K位置的值 返回该第K大的值
-        if (baseValueIndex == len - k) {
-            return nums[baseValueIndex];
+        if (j == k) {
+            return nums[j];
         }
-        // 否则继续往下递归
-        int leftValue = findKthLargest(nums, k, l, baseValueIndex - 1);
-        int rightValue = findKthLargest(nums, k, baseValueIndex + 1, r);
-
-        // 左右必然有一边能找到？是的，因为如果能找到早就返回了 不会继续往下递归 错的 如果递归走的是同一边 这里根本就不会有结果
-        if (leftValue == len - k) {
-            return leftValue;
-
+        // 否则继续往下递归 递归一边就可以了 不需要两边都递归
+        if (k >= j) {
+            return findKthLargest(nums, k, j + 1, r);
+        } else {
+            return findKthLargest(nums, k, l, j - 1);
         }
-        if (rightValue == len - k) {
-            return rightValue;
-        }
-        return -1;
     }
 
 
@@ -78,6 +83,36 @@ public class No4_215_FindKthLargest {
         nums[l] = baseValue;
         return l;
     }
+
+
+    private int splitArrByBaseValue2(int index, int[] nums, int i, int j) {
+        int base = nums[index];
+        while(i<j){
+            while(i<j&&nums[j] >= base){
+                j--;
+            }
+            if(i<j){
+                swap(nums, i, j);
+                // i++;
+            }
+            while(i<j&&nums[i] <= base){
+                i++;
+            }
+            if(i<j){
+                swap(nums, i, j);
+            }
+        }
+        return i;
+    }
+
+
+    private void swap(int[] nums, int t1, int t2) {
+        int tmp = nums[t1];
+        nums[t1] = nums[t2];
+        nums[t2] = tmp;
+    }
+
+
 
     public static void main(String[] args) {
         int[] nums = {4,1,5,2,6,3,7};
