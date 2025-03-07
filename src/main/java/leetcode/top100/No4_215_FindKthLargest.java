@@ -95,7 +95,7 @@ public class No4_215_FindKthLargest {
                 swap(nums, i, j);
                 // i++;
             }
-            while(i<j&&nums[i] <= base){
+            while(i<j&&nums[i] < base){
                 i++;
             }
             if(i<j){
