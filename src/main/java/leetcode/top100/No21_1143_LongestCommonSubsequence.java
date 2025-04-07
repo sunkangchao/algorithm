@@ -1,4 +1,4 @@
-package leetcode;
+package leetcode.top100;
 
 /**
  * 1143. 最长公共子序列
