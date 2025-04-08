@@ -63,10 +63,49 @@ public class No23_19_RemoveNthFromEnd {
     }
 
 
+    /**
+     * 方法二：
+     * 双指针解法：定义两个指针，两个指针指向相距n步，然后一起往后遍历
+     * 如果快指针已经碰到边界，那么慢指针的下一个节点就是需要删除的节点
+     * 核心：两个指针之间的差值是一直保持的，到了边界就能找出倒数第n个节点
+     *
+     * 注意：
+     * 1）需要遍历到被删除节点的前一个节点，因为你需要操作前一个节点的指向
+     * 2）链表题目建立虚拟节点/傀儡节点，这样能省去头部接待您的非空判断
+     *
+     * leetcode官方：
+     * 在对链表进行操作时，一种常用的技巧是添加一个哑节点（dummy node），它的 next 指针指向链表的头节点。这样一来，我们就不需要对头节点进行特殊的判断了。
+     *
+     * @param head
+     * @param n
+     * @return
+     */
     public ListNode removeNthFromEnd(ListNode head, int n) {
+        if (head == null) {
+            return null;
+        }
 
+        ListNode dummy = new ListNode(-1, head);
 
+        // 定义两个指针它们相隔n步 刚开始定义时它们在同一个起点
+        ListNode slow = dummy, quick = dummy;
 
+        while (n-- > 0) {
+            quick = quick.next;
+        }
+
+        while (quick.next != null) {
+            slow = slow.next;
+            quick = quick.next;
+        }
+
+        // 此时slow节点为需要删除的节点的前一个节点
+        ListNode tarNode = slow.next;
+
+        slow.next = tarNode.next;
+        tarNode.next = null;
+
+        return dummy.next;
     }
 
 
