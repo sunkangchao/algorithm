@@ -51,7 +51,40 @@ public class No1_3_LengthOfLongestSubstring {
         return maxLen;
     }
 
-    // 1. 你不能等重复的时候才更新最大长度 而是每次长度增加的时候更新最大长度
+    /**
+     * 本质上这道题是一个双层循环，但由于第二层循环需要保留遍历的位置，那么就是for+while循环的结构
+     * @param s 2025.4.9 23:29
+     * @return
+     */
+    public int lengthOfLongestSubstring2(String s) {
+        if (s == null || s.isEmpty()) {
+            return 0;
+        }
+        int l = 0, r = 0;
+        int len = s.length();
+        int maxLen = 0;
+        int curLen = 0;
+        Set<Character> set = new HashSet<>();
+        for (; l < len; l++) {
+            // 这里使用while是不想每次r节点都从新的节点开始
+            while (r < len) {
+                if (!set.contains(s.charAt(r))) {
+                    set.add(s.charAt(r));
+                    curLen++;
+                    maxLen = Math.max(maxLen, curLen);
+                    r++;
+                } else {
+                    curLen--;
+                    set.remove(s.charAt(r));
+                    break;
+                }
+            }
+        }
+        return maxLen;
+    }
+
+
+        // 1. 你不能等重复的时候才更新最大长度 而是每次长度增加的时候更新最大长度
     // 2. 先把简单的版本写出来 再写复杂的版本 不要想着一步登天 否则你想迈出一步都难 要学会拆解目标
 
     public static void main(String[] args) {
