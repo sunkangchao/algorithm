@@ -117,7 +117,7 @@ public class No25_139_wordBreak {
          *
          * 总结：
          * 1）借助字符串空串是为了辅助遍历过程，为什么选空串，什么时候选空串，当空串对于动态转移方程也是一个有效值时
-         *
+         * 2）初始值一旦是错的，后面推导的结果全是错的，重要性不言而喻。
          *
          * @param s
          * @param wordDict
@@ -126,6 +126,9 @@ public class No25_139_wordBreak {
 
         int len = s.length();
         boolean[] dp = new boolean[len + 1];
+
+        // 差一个初始值全错
+        dp[0] = true;
 
         for (int i = 1; i <= len; i++) {
             for (int j = 0; j <= i; j++) {
