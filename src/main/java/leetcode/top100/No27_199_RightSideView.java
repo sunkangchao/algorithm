@@ -98,6 +98,7 @@ public class No27_199_RightSideView {
         if (root == null) {
             return;
         }
+        System.out.println("root = " + root.val + ", level = " + level + ", result.size = " + result.size());
         if (level == result.size()) {
             result.add(root.val);
         }

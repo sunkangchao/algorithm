@@ -101,7 +101,7 @@ public class No24_82_DeleteDuplicates {
                 // 这一步可谓精辟 先指向 但不挪动指针 一遍后面有重复可以指针往后挪 你刚开始其实就是卡在这一步 然后才想出那三层循环的玩意
                 pre.next = cur;
             } else {
-                pre = cur;
+                pre = pre.next;
                 cur = cur.next;
             }
         }

@@ -13,68 +13,52 @@ public class No22_93_RestoreIpAddresses {
 
 
     private List<String> result = new ArrayList();
-    private int maxLength;
 
     public List<String> restoreIpAddresses(String s) {
-        maxLength = s.length();
+        if (s.length() > 12) {
+            return new ArrayList();
+        }
         backtrack(s, "", 0, 0);
         return result;
     }
 
-    private void backtrack(String remainning, String curString, int curGroup, int start) {
-        if (curGroup == 4) {
-            if (remainning.length() == 0) {
-                // 去除最后一个逗号
-                curString = curString.substring(0, curString.length() - 1);
-                result.add(curString);
-            }
+    private void backtrack(String s, String cur, int start, int level) {
+        if (level == 4 && start == s.length()) {
+            cur = cur.substring(0, cur.length() - 1);
+            result.add(cur);
             return;
         }
 
-        char[] chars = remainning.toCharArray();
-        int length = chars.length;
-        StringBuilder remainningBuilder = new StringBuilder(remainning);
-        for (int i = 0; i < length; i++) {
-            if (chars[0] == '0') {
-                String tmpString;
-                if (curString.isEmpty()) {
-                    tmpString = chars[i] + ".";
-                } else {
-                    tmpString = curString + chars[i] + ".";
-                }
-                backtrack(remainningBuilder.substring(1), tmpString, curGroup + 1, start + 1);
-                break;
-            } else {
-                String sub = remainningBuilder.substring(0, i + 1);
-                int digest = Integer.parseInt(sub);
-                if (digest <= 255) {
-                    // 说明是一个有效的字符
-                    String tmpString;
-                    if (curString.isEmpty()) {
-                        tmpString = remainningBuilder.substring(0, i + 1) + ".";
-                    } else {
-                        tmpString = curString + remainningBuilder.substring(0, i + 1) + ".";
-                    }
-                    if (judgeInValidate(maxLength, start, i, curGroup)) {
-                        continue;
-                    }
-                    backtrack(remainningBuilder.substring(i + 1), tmpString, curGroup + 1, start + i + 1);
-                } else {
+        for (int i = start; i < s.length(); i++) {
+            if (s.charAt(start) == '0') {
+                if (isValidIp(s.length() - start - 1, level + 1)) {
                     break;
                 }
+                backtrack(s, cur + "0.", start + 1, level + 1);
+                return;
             }
+            if (isValidIp(s.length() - i - 1, level + 1)) {
+                continue;
+            }
+            String tmp = s.substring(start, i + 1);
+            int intTmp = Integer.parseInt(tmp);
+            if (intTmp > 255) {
+                break;
+            }
+            backtrack(s, cur + tmp + ".", i + 1, level + 1);
         }
     }
 
-    private boolean judgeInValidate(int length, int start, int i, int curGroup) {
-        return  length - (start + i + 1)  > (4 - curGroup - 1) * 3;
+    private boolean isValidIp(int length, int level) {
+        return length > (4 - level) * 3;
     }
+
 
 
     public static void main(String[] args) {
 
         No22_93_RestoreIpAddresses obj = new No22_93_RestoreIpAddresses();
-        List<String> strings = obj.restoreIpAddresses("101023");
+        List<String> strings = obj.restoreIpAddresses("0000");
         System.out.println(strings);
 
     }
