@@ -16,7 +16,9 @@ public class No32_142_DetectCycle {
 
     public ListNode detectCycle(ListNode head) {
 
-        // 头尾节点开始处于同一个位置 待深思
+        // 头尾节点开始处于同一个位置 待深思 明白了 快慢指针都是开始指向同一个节点 只有这样 快指针走完时慢指针才会走一半
+        // 假如刚开始时快指针就比慢指针多一个节点 那么快指针走完时 慢指针指向的并不是中点 而是中点的前一个节点
+        // 所以 快慢指针的题目 快慢指针需要指向同一个节点
         ListNode fast = head, slow = head;
         while (fast != null && fast.next != null) {
             fast = fast.next.next;

@@ -1,0 +1,189 @@
+#**添加规则文件可帮助模型精准理解你的编码偏好，如框架、代码风格等**
+#**规则文件只对当前工程生效，单文件限制10000字符。如果无需将该文件提交到远程 Git 仓库，请将其添加到 .gitignore**
+
+# 通义灵码规则配置文件（仅对当前工程生效）
+# 建议加入 .gitignore 避免提交
+
+project:
+    language: java
+    framework: springboot
+    java_version: 8
+
+# 使用的技术栈
+dependencies:
+    - springmvc
+    - springboot
+    - mybatis-plus
+    - open-feign
+    - eureka
+    - ribbon
+    - swagger
+    - apollo
+    - hystrix
+    - sentinel
+    - spring-security
+    - redis
+    - rocketmq
+    - mysql
+
+style:
+    code_convention: 阿里巴巴Java开发手册（最新版）
+    indentation: 4
+    naming:
+        class: PascalCase
+        method: camelCase
+        variable: camelCase
+        constant: UPPER_SNAKE_CASE
+    comment:
+        require_class_comment: true
+        require_method_comment: true
+        require_param_return_comment: true
+        service_method_detail: true  # service方法需说明用途、参数含义、返回类型、可能异常
+    controller:
+        responsibility: 参数校验、调用 service、数据转换、保持精简
+        forbid_call_mapper: true
+        swagger_annotations: true
+    service:
+        type: interface
+        method_definition: 仅声明业务逻辑接口
+        service_impl:
+        location: .impl
+        responsibility: 业务编排、mapper 调用、异常处理
+        unit_of_work: true
+        logging_level:
+        biz_exception: warn
+        system_or_external_error: error
+    repository:
+        usage: 存放 MyBatis-Plus Lambda 查询/更新语句
+        lambda_query_location: repository 层
+        complex_sql_should_use_xml: true
+        interface:
+            extend: com.baomidou.mybatisplus.extension.service.IService
+            description: 定义数据库操作接口，仅声明不实现；方法名需清晰、职责单一
+        impl:
+            extend: com.baomidou.mybatisplus.extension.service.impl.ServiceImpl
+            description: 实现 repository 接口，进行数据库操作实现；支持业务聚合复用
+            inject_mapper_as_field: true  # Mapper 作为成员变量注入
+            constructor_injection: true
+            log_annotation: true
+            naming:
+                suffix: RepoImpl
+        style:
+            comment:
+                require_method_comment: true
+                require_param_return_comment: true
+    mapper:
+        orm: mybatis-plus
+        xml_sql: true
+        forbid_annotation_sql: true
+        filter_deleted_data: true  # 所有查询默认加 is_deleted = 0
+        default_query_limit: 2000 # 所有查询必须包含 limit，分页除外
+    entity:
+        annotation: [@Builder, @AllArgsConstructor, @NoArgsConstructor, @Data]
+        require_field_comment: true
+        type_handler_usage: allowed
+
+# 日志打印要求
+logging:
+    level:
+        business_exception: warn  # 业务异常日志使用 warn
+        system_or_external_exception: error  # 外部服务错误或系统异常才打 error
+
+structure:
+    layers:
+        - controller
+        - service
+        - service.impl
+        - repository
+        - repository.impl
+        - mapper
+        - mapper.xml
+    naming_convention:
+        controller_suffix: Controller
+        service_suffix: Service
+        service_impl_suffix: ServiceImpl
+        repository_suffix: Repo
+        repository_impl_suffix: RepoImpl
+        mapper_suffix: Mapper
+        entity_suffix: Entity
+
+domain_rules:
+    enum:
+        require_code_and_desc: true
+    dto:
+        use_swagger: true
+    exception_handling:
+        standard: cn.codemao.cloud.core.common.exception.BaseBizException
+        fallback_for_feign: hystrix or sentinel fallbackFactory
+    logging:
+        required_at_entry: true
+        required_on_exception: true
+
+config_priority:
+    spring_config:
+        - application-{profile}.yml
+        - Apollo配置
+        - application.yml
+
+feign_and_hystrix:
+    feign:
+        hystrix_timeout_first: true
+        disable_default_retry: true
+        timeout_precedence: hystrix > ribbon > client
+    hystrix:
+        optional: true
+        preferred_over_hystrix: false
+        fallback_support: true
+
+sentinel:
+    usage:
+      - 流控限流：controller 层或 service 层
+      - 降级处理：定义 fallback 方法或类
+      - 热点参数限流支持
+      - metrics 接入推荐 dashboard
+
+performance:
+    latency_threshold: 300ms
+    retry_limit: 3
+    pagination_required_for_list: true
+    query_result_limit_required: true
+
+swagger:
+    enable: true
+    annotate_all_api: true
+
+refactor_guidelines:
+    - 使用已有可复用代码直接调用，不重复造轮子
+    - 自定义参数类型使用 DTO，不直接用 Entity
+    - entity 慎用默认值，需考虑历史数据影响
+
+
+# 自我检查要求（每次代码生成后必须执行）
+self_check:
+    sources_provided:
+        - 提示词文档（.md）
+        - 当前项目可复用代码列表
+        - 当前项目实际代码风格文件或目录
+
+must_check:
+    - 是否满足核心需求（接口、流程、逻辑、边界场景）
+    - 是否满足性能约束（是否满足 < 100ms、分页、缓存优化等）
+    - 是否符合代码风格（命名、结构、注释）
+    - 是否使用已有可复用代码而不是重复造轮子
+    - 是否遗漏 Swagger 注解、参数判空、默认值风险
+    - 是否有潜在 bug 或逻辑错误
+    - 是否符合日志等级规范（warn vs error）
+    - 所有 SQL 是否加 limit（如 limit 2000）
+    - 复杂 SQL 是否使用 XML 编写
+    - 是否存在 Apollo 配置加载顺序问题
+    - 是否符合 MyBatis-Plus 使用规范（不使用 @Select）
+
+notes:
+    - DTO 出入参必须使用 Swagger 注解描述字段
+    - spring依赖使用构造注入方式（@RequiredArgsConstructor + final）
+    - 生成代码前，请充分利用提示词、复用代码、风格参考文件
+    - 实体类慎用默认值，必须考虑历史数据场景
+    - 所有 SQL 查询必须过滤逻辑删除（is_deleted = 0）
+    - 除非确属紧急错误，不得滥用 error 级别日志
+    - 所有 Mapper 查询建议带 limit（如 limit 2000），避免全表扫描
+    - repository 层统一管理 Lambda 查询/更新逻辑
