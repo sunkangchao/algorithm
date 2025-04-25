@@ -2,10 +2,7 @@ package leetcode.top100;
 
 import study.util.PrintArray;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.List;
+import java.util.*;
 
 /**
  * No37_239_MaxSlidingWindow
@@ -26,7 +23,7 @@ public class No37_239_MaxSlidingWindow {
     // 2. 每移动一步，先把栈中元素移除，如果已经不在窗口内的话
     // 3. 把当前元素压入栈中，控制栈中元素不超过k个
     //
-    public int[] maxSlidingWindow(int[] nums, int k) {
+    public int[] maxSlidingWindow1(int[] nums, int k) {
 
         Deque<Integer> deque = new ArrayDeque<>();
         for (int i = 0; i < k; i++) {
@@ -60,6 +57,33 @@ public class No37_239_MaxSlidingWindow {
 
         return result.stream().mapToInt(Integer::intValue).toArray();
     }
+
+    // -------------------------------------
+
+    // 优先队列解法 在遍历过程中把最大值放置在堆中
+    public int[] maxSlidingWindow(int[] nums, int k) {
+
+        // 存储[num, index]
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> b[0] - a[0]);
+
+        for (int i = 0; i < k; i++) {
+            pq.offer(new int[]{nums[i], i});
+        }
+
+        int n = nums.length;
+        int[] ans = new int[n - k + 1];
+        ans[0] = pq.peek()[0];
+
+        for (int i = k; i < n; ++i) {
+            pq.offer(new int[]{nums[i], i});
+            while (pq.peek()[1] < i - k + 1) {
+                pq.poll();
+            }
+            ans[i - k + 1] = pq.peek()[0];
+        }
+        return ans;
+    }
+
 
     public static void main(String[] args) {
         No37_239_MaxSlidingWindow obj = new No37_239_MaxSlidingWindow();
