@@ -66,17 +66,17 @@ public class No36_69_MySqrt {
         }
 
         int left = 1, right = x;
-        int index = 0;
-        while (left <= right) {
+//        int index = 0;
+        while (left < right) {
             int mid = (left + right) / 2;
             if (mid > (x / mid)) {
                 right = mid - 1;
             } else {
-                index = mid;
+//                index = mid;
                 left = mid + 1;
             }
         }
-        return index;
+        return left;
     }
 
 
