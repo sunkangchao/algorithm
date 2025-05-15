@@ -1,12 +1,10 @@
 package leetcode.top100;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 /**
- * No46_322_CoinChange
+ * No49_322_CoinChange
  *<p/>
  * 322. 零钱兑换
  *<p/>
@@ -24,7 +22,7 @@ import java.util.Set;
  * @version 1.0
  * @since <pre>05月 12, 2025</pre>
  */
-public class No46_322_CoinChange {
+public class No49_322_CoinChange {
 
 
     /**
@@ -141,7 +139,7 @@ public class No46_322_CoinChange {
 
 
     public static void main(String[] args) {
-        No46_322_CoinChange obj = new No46_322_CoinChange();
+        No49_322_CoinChange obj = new No49_322_CoinChange();
         int[] nums = {1,2,5};
         int ans = obj.coinChange(nums, 11);
         System.out.println(ans);

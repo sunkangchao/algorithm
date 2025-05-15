@@ -18,7 +18,7 @@ import leetcode.top100.base.ListNode;
  * @author sunkangchao
  * @since 2025/5/2 23:29
  */
-public class No45_2_AddTwoNumbers {
+public class No48_2_AddTwoNumbers {
 
 
 
