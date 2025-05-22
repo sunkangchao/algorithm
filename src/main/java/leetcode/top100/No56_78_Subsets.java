@@ -36,7 +36,7 @@ public class No56_78_Subsets {
      * @param nums
      * @return
      */
-    public List<List<Integer>> subsets(int[] nums) {
+    public List<List<Integer>> subsets1(int[] nums) {
         backtrack(nums, new ArrayList<>(), 0);
         return result;
     }
@@ -53,6 +53,36 @@ public class No56_78_Subsets {
         cur.remove(cur.size() - 1);
         backtrack(nums, cur, index + 1);
 
+    }
+
+
+    /**
+     * 思路二：迭代法，位运算
+     *
+     * 遍历从0-2^n,判断每位整数的每个bit位，为1则取对应数组中的值，否则跳过。
+     *
+     * 2^n如何表示？
+     *
+     * 1 << n，位运算。
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> subsets(int[] nums) {
+
+        List<List<Integer>> result = new ArrayList<>();
+        List<Integer> cur = new ArrayList<>();
+
+        for (int i = 0; i < 1 << nums.length; i++) {
+            cur.clear();
+            // 这里移动n位即可
+            for (int j = 0; j < nums.length; j++) {
+                if ((i & (1 << j)) != 0) {
+                    cur.add(nums[j]);
+                }
+            }
+            result.add(new ArrayList<>(cur));
+        }
+        return result;
     }
 
     public static void main(String[] args) {
