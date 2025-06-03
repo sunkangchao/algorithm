@@ -48,7 +48,7 @@ public class No68_912_HeapSort {
             int left = (i << 1) + 1;
             int right = (i << 1) + 2;
 
-            if (left < len && nums[left] > nums[i]) {
+            if (left < len && nums[left] > nums[large]) {
                 large = left;
             }
             if (right < len && nums[right] > nums[large]) { //

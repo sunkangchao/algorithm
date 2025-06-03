@@ -55,6 +55,8 @@ public class No64_42_Trap {
     // 1）当Lmax < Rmax时，left处的高度取决于Lmax的高度
     // 2）当Lmax >= Rmax时，right处的高度取决于Rmax的高度
     // 当left > right时终止循环
+    //
+    // 注意：Lmax和Rmax严格来说，应该定义成left指针左边的最大值，right指针右边的最大值。它是跟着left和right指针同步变更的。
     public int trap(int[] height) {
         // 基础校验
         if (height.length <= 2) {
