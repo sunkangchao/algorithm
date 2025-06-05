@@ -40,7 +40,7 @@ public class No69_164_MaximumGap {
      * @param nums
      * @return
      */
-    public int maximumGap(int[] nums) {
+    public int maximumGap0(int[] nums) {
 
         // 0. 基础校验
         int len = nums.length;
@@ -88,13 +88,83 @@ public class No69_164_MaximumGap {
         return ans;
     }
 
-    public static void main(String[] args) {
-        No69_164_MaximumGap obj = new No69_164_MaximumGap();
-        int[] arr = {3,6,9,1};
-        int ans = obj.maximumGap(arr);
-        System.out.println(ans);
+    /**
+     * 思路二：基数排序
+     *
+     * 先按照个位，十位，百位...，直至nums出现的最大值的位数
+     * 对每个位数进行排序，然后重新赋值回原数组，这样整个数组就整体基于个位、十位、百位进行排序，整体就是有序的。
+     *
+     * 其实是类似于多级排序，比如先把数组按照个位排序好，然后在统计每个十位数字的出现个数，最后通过十位出现个数来重组数组时，其实
+     * 是依赖于按照个位排好序的数组，这样十位重组完后，整个数组就是按照个位、十位都排好序的。如果我们遍历完最大的位数，那整个数组就是有序的了。
+     *
+     * 基数排序和桶排序的异同：
+     * 本质也是桶排序，只是桶的个数是固定的，且是固定的。基数排序可以理解为桶排序的一种特殊情况，或者是一种扩展。所以两者广义上都可以称之为桶排序。
+     *
+     * 注意：cnt数组需要每次重新赋值，避免上轮循环产生的数据干扰。
+     *
+     * @param nums
+     * @return
+     */
+    public int maximumGap(int[] nums) {
+
+        if (nums.length < 2) {
+            return 0;
+        }
+        radixSort(nums);
+        int ret = 0;
+        for (int i = 1; i < nums.length; i++) {
+            ret = Math.max(ret, nums[i] - nums[i - 1]);
+        }
+        return ret;
+    }
+
+    // 基数排序
+    private void radixSort(int[] nums) {
+
+        // 1. 统计nums中的最大值maxVal
+        int maxVal = Arrays.stream(nums).max().getAsInt();
+
+        // 2. 定义buf、cnt、位数k
+        int n = nums.length;
+        int[] buf = new int[n];
+        int k = 1;
+
+        // 3. 循环，直至maxVal < k
+        while (maxVal >= k) {
+
+            // cnt数组需要重新赋值 相当于是清空数组
+            int[] cnt = new int[10];
+
+            // 4. 每次循环 统计cnt数组 累加cnt数组 然后赋值buf数组 最后交换nums数组 位数*10
+            for (int i = 0; i < nums.length; i++) {
+                int digit = (nums[i] / k) % 10;
+                cnt[digit]++;
+            }
+
+            for (int i = 1; i < cnt.length; i++) {
+                cnt[i] += cnt[i - 1];
+            }
+
+            for (int i = n - 1; i >= 0; i--) {
+                int digit = (nums[i] / k) % 10;
+                buf[cnt[digit] - 1] = nums[i];
+                cnt[digit]--;
+            }
+
+            System.arraycopy(buf, 0, nums, 0, n);
+            k *= 10;
+        }
+
     }
 
 
+
+
+    public static void main(String[] args) {
+        No69_164_MaximumGap obj = new No69_164_MaximumGap();
+        int[] arr = {1,10000000};
+        int ans = obj.maximumGap(arr);
+        System.out.println(ans);
+    }
 
 }
