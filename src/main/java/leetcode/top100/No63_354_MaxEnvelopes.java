@@ -47,50 +47,52 @@ public class No63_354_MaxEnvelopes {
      */
     public int maxEnvelopes(int[][] envelopes) {
 
-        // 排序，预先处理
-        Arrays.sort(envelopes, (a1, a2) -> a1[0] == a2[0] ? a2[1] - a1[1] : a1[0] - a2[0]);
+        // 1. 排序
+        Arrays.sort(envelopes, (a1, a2) -> {
+            if (a1[0] == a2[0]) {
+                return a2[1] - a1[1];
+            }
+            return a1[0] - a2[0];
+        });
 
-        // 获取高度数组
+        // 2. 按照高度组织新数组
+        int n = envelopes.length;
         int[] height = new int[envelopes.length];
-        for (int i = 0; i < height.length; i++) {
+        for (int i = 0; i < n; i++) {
             height[i] = envelopes[i][1];
         }
 
-        // 根据高度数据按照二分法找到最长递增子序列长度
-        int[] arr = new int[height.length];
-        int len = 1;
-        arr[0] = height[0]; // 为了避免0-1越界，需要保证len > 0 或者做非空判断
-        for (int i = 1; i < height.length; i++) {
-            if (height[i] > arr[len - 1]) {
-                arr[len] = height[i];
-                len++;
+        // 3. 求解最长公共子序列（二分法求解）
+        int[] ret = new int[n];
+        ret[0] = height[0];
+        int size = 1;
+        for (int i = 1; i < n; i++) {
+            // 4. 大于size直接添加、小于size找到其索引位，然后交换 最后返回最大长度
+            if (height[i] > ret[size - 1]) {
+                ret[size++] = height[i];
             } else {
-                // 否则按照二分查找法 找到height[i]大于arr[i]的最大i值
-                int maxI = binarySearchMaxI(arr, len, height[i]);
-                arr[maxI + 1] = height[i];
+                int k = binarySearch(ret, size, height[i]);
+                ret[k] = height[i];
             }
         }
-
-        return len;
+        return size;
     }
 
-
-    private int binarySearchMaxI(int[] arr, int len, int target) {
+    // 设计一个方法，查询数组中第一个数ret[i]，使的 ret[j] < target <= ret[i]
+    private int binarySearch(int[] ret, int len, int target) {
         int left = 0, right = len - 1;
-        int rs = 0;
-        while (left <= right) { // 这里意味着left == right时终止循环
+
+        // 想想本来是查询什么功能的 就知道这里的边界是left < right 有没有等号
+        while (left < right) {
             int mid = left + (right - left) / 2;
-            if (target > arr[mid]) {
-                rs = mid;
+            if (ret[mid] < target) {
                 left = mid + 1;
-            } else if (target == arr[mid]) {
-                rs = mid;
-                right = mid - 1;
             } else {
-                right = mid - 1;
+                right = mid;
             }
         }
-        return rs;
+
+        return left;
     }
 
 

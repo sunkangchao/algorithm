@@ -2,6 +2,9 @@ package leetcode.top100;
 
 import leetcode.top100.base.TreeNode;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * No59_129_SumNumbers
  *
@@ -52,31 +55,60 @@ public class No59_129_SumNumbers {
     }
 
 
-    /**
-     * 思路二：带返回值dfs
-     *
-     * 把dp[i]定义经过当前节点所有子树的和。
-     *
-     * dp[i] = dp[i.left] + dp[i.right]
-     *
-     * @param root
-     * @return
-     */
-    public int sumNumbers(TreeNode root) {
-        return sumNumbers(root, 0);
+    // 解法二 dfs
+    public int sumNumbers2(TreeNode root) {
+        return dfsCalc(root, 0);
     }
 
-    private int sumNumbers(TreeNode root, int sum) {
+    // 像循环一样，抽取出每一层递归需要做的事情，即抽取出一个循环单元。（确定每一次循环/递归需要做的事情边界）
+    private int dfsCalc(TreeNode node, int num) {
+        // 确定出口
+        if (node == null) {
+            return 0;
+        }
+
+        // 每一个节点的总和都等于它的左右子节点总和
+        int val = num * 10 + node.val;
+
+        // 如果全部子节点同时为空就应该提前终止 不需要再往下
+        if (node.left == null && node.right == null) {
+            return val;
+        }
+
+        return dfsCalc(node.left, val) + dfsCalc(node.right, val);
+    }
+
+    // 解法三：广度优先搜索 使用覆盖子节点val的方式来传递总和值
+    public int sumNumbers(TreeNode root) {
         if (root == null) {
             return 0;
         }
 
-        int t = sum * 10 + root.val;
-        if (root.left == null && root.right == null) {
-            return t;
-        } else {
-            return sumNumbers(root.left, t) + sumNumbers(root.right, t);
+        // 定义队列 结果变量
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        int sum = 0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            while (size-- > 0) {
+                TreeNode node = queue.poll();
+                if (node.left == null && node.right == null) {
+                    sum += node.val;
+                    continue;
+                }
+                if (node.left != null) {
+                    // 覆盖左节点的val值
+                    node.left.val = node.val * 10 + node.left.val;
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    node.right.val = node.val * 10 + node.right.val;
+                    queue.offer(node.right);
+                }
+            }
         }
+        return sum;
     }
 
     public static void main(String[] args) {
