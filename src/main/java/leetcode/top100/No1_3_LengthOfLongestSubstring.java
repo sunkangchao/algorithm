@@ -83,8 +83,34 @@ public class No1_3_LengthOfLongestSubstring {
         return maxLen;
     }
 
+    // 其实这个就是版本1的改进版，把外层的循环去掉，只需要去遍历右层循环即可
+    public int lengthOfLongestSubstring3(String s) {
 
-        // 1. 你不能等重复的时候才更新最大长度 而是每次长度增加的时候更新最大长度
+        // 定义左右指针，以及set维持不重复字符串，以及最大长度
+        int left = 0, right = 0;
+        int maxLen = 0, curLen = 0;
+        Set<Character> set = new HashSet<>();
+        
+        // 右指针到达边界就可以结束了
+        while (right < s.length()) {
+            // 判断右指针的字符是否在set中
+            if (set.add(s.charAt(right))) {
+                curLen++;
+                maxLen = Math.max(maxLen, curLen);
+                right++;
+            } else {
+                curLen--;
+                set.remove(s.charAt(left));
+                left++;
+            }
+        }
+
+        return maxLen;
+    }
+
+
+
+    // 1. 你不能等重复的时候才更新最大长度 而是每次长度增加的时候更新最大长度
     // 2. 先把简单的版本写出来 再写复杂的版本 不要想着一步登天 否则你想迈出一步都难 要学会拆解目标
 
     public static void main(String[] args) {
