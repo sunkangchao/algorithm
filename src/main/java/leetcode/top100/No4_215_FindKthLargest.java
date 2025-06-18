@@ -105,6 +105,58 @@ public class No4_215_FindKthLargest {
         return i;
     }
 
+    private int splitArrByBaseValue3(int[] nums, int i, int j) {
+        // 确定基准
+        int base = nums[i];
+
+        // 大循环 直到i和j相遇
+        while (i < j) { // 相等时可以结束了
+            while (i < j && nums[j] >= base) {
+                j--;
+            }
+            if (i < j) {
+                nums[i] = nums[j];
+            }
+
+            while (i < j && nums[j] < base) {
+                i++;
+            }
+            if (i < j) {
+                nums[j] = nums[i];
+            }
+        }
+
+        return i;
+        // 先判断右边是否大于等于 等于放在右边 然后如果l < r就覆盖
+
+        // 再判断左边是否小于 然后如果 l > r就覆盖 两个回合下来左右都各交换了一次 但仍然需要继续这个循环 直至完全交换完成
+
+    }
+
+    private int splitArrByBaseValue4(int[] nums, int i, int j) {
+        int base = nums[i];
+        while (i < j) {
+            while (i < j && nums[j] >= base) {
+                j--;
+            }
+            if (i < j) {
+                swap(nums, i, j);
+            }
+
+            while (i < j && nums[i] < base) {
+                i++;
+            }
+            if (i < j) {
+                swap(nums, i, j);
+            }
+        }
+        return i;
+    }
+
+
+
+
+
 
     private void swap(int[] nums, int t1, int t2) {
         int tmp = nums[t1];
