@@ -119,9 +119,9 @@ public class No31_22_GenerateParenthesis {
         }
         chars[left + right] = '(';
         dfs(chars, left + 1, right, n, result);
-
         // 恢复现场
         chars[left + right] = ')';
+
         if (left > right) {
             dfs(chars, left, right + 1, n, result);
         }
