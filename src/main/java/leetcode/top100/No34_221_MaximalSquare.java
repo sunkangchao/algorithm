@@ -23,7 +23,7 @@ public class No34_221_MaximalSquare {
 
         for (int i = 0; i < matrix.length; i++) {
             dp[i][0] = matrix[i][0] == '1' ? 1 : 0;
-            max = Math.max(dp[i][0], max);
+            max = Math.max(dp[i][0], max); // 注意边缘也需要更新其最大边长
         }
 
         for (int j = 0; j < matrix[0].length; j++) {
