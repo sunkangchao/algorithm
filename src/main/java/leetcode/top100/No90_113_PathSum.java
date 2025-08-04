@@ -8,6 +8,12 @@ import java.util.List;
 /**
  * No90_113_PathSum
  *
+ * 113. 路径总和 II
+ *
+ * 给你二叉树的根节点 root 和一个整数目标和 targetSum ，找出所有 从根节点到叶子节点 路径总和等于给定目标和的路径。
+ *
+ * 叶子节点 是指没有子节点的节点。
+ *
  * @author sunkangchao
  * @version 1.0
  * @since <pre>08月 01, 2025</pre>
