@@ -19,7 +19,7 @@ public class No7_15_ThreeSum {
      * @param nums
      * @return
      */
-    public List<List<Integer>> threeSum(int[] nums) {
+    public List<List<Integer>> threeSum1(int[] nums) {
 
         // 要求不能出现重复的三元组
         // a + b + c = 0，而不是其它数值
@@ -101,10 +101,51 @@ public class No7_15_ThreeSum {
         No7_15_ThreeSum instance = new No7_15_ThreeSum();
 //        List<List<Integer>> lists = instance.threeSum(new int[]{-1, 0, 1, 2, -1, -4});
 //        List<List<Integer>> lists = instance.threeSum2(new int[]{0,0,0,0});
-        List<List<Integer>> lists = instance.threeSum2(new int[]{1,-1,-1,0});
+        List<List<Integer>> lists = instance.threeSum(new int[]{-1,0,1,2,-1,-4});
 
         System.out.println(lists);
 
+    }
+
+
+
+    // 2025.8.15 16:15
+    // 使用二数之和方式求解 2025.8.15 40分钟合调试
+    public List<List<Integer>> threeSum(int[] nums) {
+        // 校验、定义结果集
+        List<List<Integer>> list = new ArrayList<>();
+        // 排序
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] > 0) {
+                continue;
+            }
+            // 跳过重复元素
+            if (i != 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+            int first = nums[i];
+            // 2,2,4,5,6,7
+            int j = i + 1;
+            Set<Integer> set = new HashSet<>();
+            while (j < nums.length) {
+                int target = -(first + nums[j]);
+                if (set.contains(target)) {
+                    list.add(Arrays.asList(first, nums[j], target));
+                    // 并且跳过重复的j
+                    while (j < nums.length - 1 && nums[j] == nums[j + 1]) {
+                        j++;
+                    }
+                } else {
+                    // 添加到set中
+                    set.add(nums[j]);
+                }
+                j++;
+            }
+        }
+
+        // 两数之和做法：在遍历过程中寻找目标值
+        return list;
     }
 
 
