@@ -139,6 +139,99 @@ public class No2_146_LRUCache {
         }
     }
 
+
+    // 2025.8.24 23:54
+    static class LRUCache {
+
+        private Map<Integer, Node> map;
+        private Node head;
+        private Node tail;
+        private int capacity;
+        private int size;
+
+        public LRUCache(int capacity) {
+            this.map = new HashMap<>();
+            this.head = new Node(-1, -1);
+            this.tail = new Node(-1, -1);
+            head.next = tail;
+            tail.pre = head;
+            this.capacity = capacity; // 这里刚写错 没有加this 导致没有赋值成功 第一次get失败
+            this.size = 0;
+        }
+
+        public int get(int key) {
+            if (map.containsKey(key)) {
+                Node node = map.get(key);
+                moveToHead(node);
+                return node.val;
+            } else {
+                return -1;
+            }
+        }
+
+        public void put(int key, int value) {
+            if (map.containsKey(key)) {
+                Node node = map.get(key);
+                node.val = value;
+                moveToHead(node);
+            } else { // head -> 2 -> 1 -> tail
+                Node node = new Node(key, value);
+                // 添加至头节点
+                Node next = head.next;
+                head.next = node;
+                node.pre = head;
+                node.next = next;
+                next.pre = node;
+                map.put(key, node);
+                size++;
+                if (size > capacity) {
+                    removeTail();
+                }
+            }
+        }
+
+        private void moveToHead(Node node) {
+            // 移除当前节点
+            Node pre = node.pre;
+            Node next = node.next;
+            pre.next = next;
+            next.pre = pre;
+
+            // 移动至头节点
+            Node headNext = head.next;
+            head.next = node;
+            node.pre = head;
+            node.next = headNext;
+            headNext.pre = node;
+        }
+
+        private void removeTail() {
+            // 移除链表的尾节点
+            Node tailPre = tail.pre;
+            tailPre.pre.next = tail;
+            tail.pre = tailPre.pre;
+            // 清空当前指针
+            tailPre.next = null;
+            tailPre.pre = null;
+            // 移除map中的节点
+            map.remove(tailPre.key);
+            size--; // 这里刚写错 没有维护
+        }
+
+
+        static class Node {
+            Node pre;
+            Node next;
+            int key;
+            int val;
+
+            Node(int key, int val) {
+                this.key = key;
+                this.val = val;
+            }
+        }
+    }
+
     public static void main(String[] args) {
         No2_146_LRUCache obj = new No2_146_LRUCache(2);
         obj.put(2, 1);
