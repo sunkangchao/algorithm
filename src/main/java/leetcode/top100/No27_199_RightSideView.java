@@ -89,7 +89,7 @@ public class No27_199_RightSideView {
      * @return
      */
     public List<Integer> rightSideView(TreeNode root) {
-        dfs(root, 0);
+        dfs(root, 1);
         return result;
     }
 
@@ -99,7 +99,7 @@ public class No27_199_RightSideView {
             return;
         }
         System.out.println("root = " + root.val + ", level = " + level + ", result.size = " + result.size());
-        if (level == result.size()) {
+        if (level - 1 == result.size()) {
             result.add(root.val);
         }
         dfs(root.right, level + 1);

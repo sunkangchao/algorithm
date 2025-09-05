@@ -1,5 +1,7 @@
 package leetcode.top100;
 
+import study.system.baseclass.graph.Node;
+
 import java.util.ArrayDeque;
 import java.util.Deque;
 
@@ -19,7 +21,7 @@ import java.util.Deque;
  *
  * 注意：
  * 1）为什么两个栈要同步push？如果minStack只存一份最小值，那么主stack在pop最小值时，minStack就没有这一份最小值了，但主栈不止一个最小值，这种情况就会出问题。
- * 2）minStack在刚push时，使用Math.min(val, minStack.peek())会报空指针，为了使用这种写法而不报错，可以在创建对象时往minStack压入Integer.MAX_VALUE
+ * 2）minStack在刚push时，使用Math.min(val, minStack.peek())会报空指针，为了使用这种写法而不报错，可以在创建对象时往minStack压入Integer.MAX_VALUE（不需要）
  * 3）Deque实现的栈都是基于头节点操作，push或者pop等
  * 4）操作栈中元素注意判空，pop操作会异常，peek操作会返回null。
  *
@@ -34,6 +36,7 @@ public class No38_155_MinStack {
     private Deque<Integer> minStack;
 
 
+    // Deque实现栈结
     public No38_155_MinStack() {
         stack1 = new ArrayDeque<>();
         minStack = new ArrayDeque<>();
@@ -41,7 +44,7 @@ public class No38_155_MinStack {
 
     public void push(int val) {
         stack1.push(val);
-        minStack.push(Math.min(val, minStack.peek()));
+        minStack.push(Math.min(val, minStack.peek())); // 注意这里是需要跟minStack上的最小值比较，而不是stack1的top
     }
 
     public void pop() {
@@ -56,5 +59,51 @@ public class No38_155_MinStack {
     public int getMin() {
         return minStack.peek();
     }
+
+    // ------------------ 解法二 --------------------
+    // 以单向链表实现最小栈
+    static class No38_155_MinStack2 {
+        private MinNode topNode;
+
+        public No38_155_MinStack2() {
+
+        }
+
+        public void push(int val) {
+            if (topNode == null) {
+                topNode = new MinNode(null, val, val);
+            } else {
+                MinNode cur = new MinNode(topNode, val, Math.min(val, topNode.minVal));
+                cur.next = topNode;
+                topNode = cur;
+            }
+        }
+
+        public void pop() {
+            // 题目保证总会在非空栈上操作
+            topNode = topNode.next;
+        }
+
+        public int top() {
+            return topNode.val;
+        }
+
+        public int getMin() {
+            return topNode.minVal;
+        }
+
+        private static class MinNode {
+            MinNode next;
+            int val;
+            int minVal;
+
+            MinNode(MinNode next, int val, int minVal) {
+                this.next = next;
+                this.val = val;
+                this.minVal = minVal;
+            }
+        }
+    }
+
 
 }
