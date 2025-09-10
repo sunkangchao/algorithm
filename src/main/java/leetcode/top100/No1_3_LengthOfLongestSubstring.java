@@ -108,15 +108,44 @@ public class No1_3_LengthOfLongestSubstring {
         return maxLen;
     }
 
+    // abcabccb pwwkew
+    // 卡在set.remove方法，你应该移除最左left指针处的值 而不是当前right指向的值
+    // 另外，由于存在left和right指针，所以并不需要再维护一个cur长度
+    // 2025.9.10 编写10分钟之内 调试13分钟 23分钟ak
+    public int lengthOfLongestSubstring4(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+        // 定义无重复字符串集合 最长长度 左右指针
+        Set<Character> set = new HashSet<>();
+        int left = 0;
+        int right = 0;
+        int maxLen = 0;
+
+        while (right < s.length()) {
+            char c = s.charAt(right);
+            if (set.add(c)) {
+                right++;
+                maxLen = Math.max(maxLen, right - left);
+            } else {
+                set.remove(s.charAt(left));
+                left++;
+            }
+        }
+
+        return maxLen;
+    }
 
 
-    // 1. 你不能等重复的时候才更新最大长度 而是每次长度增加的时候更新最大长度
+
+
+        // 1. 你不能等重复的时候才更新最大长度 而是每次长度增加的时候更新最大长度
     // 2. 先把简单的版本写出来 再写复杂的版本 不要想着一步登天 否则你想迈出一步都难 要学会拆解目标
 
     public static void main(String[] args) {
-        String s = " ";
+        String s = "pwwkew";
         No1_3_LengthOfLongestSubstring instance = new No1_3_LengthOfLongestSubstring();
-        int result = instance.lengthOfLongestSubstring(s);
+        int result = instance.lengthOfLongestSubstring4(s);
         System.out.println(result);
     }
 
