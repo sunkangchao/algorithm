@@ -83,7 +83,7 @@ public class No24_82_DeleteDuplicates {
      * @param head
      * @return
      */
-    public ListNode deleteDuplicates(ListNode head) {
+    public ListNode deleteDuplicates2(ListNode head) {
         if (head == null) {
             return null;
         }
@@ -108,6 +108,34 @@ public class No24_82_DeleteDuplicates {
 
         return dummyNode.next;
 
+    }
+
+
+    // 20250912
+    // [1,2,3,3,4,4,5]
+    public ListNode deleteDuplicates(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        ListNode dummy = new ListNode(-1, head);
+        ListNode pre = dummy;
+        ListNode cur = head;
+
+        while (cur != null && cur.next != null) {
+            if (cur.val == cur.next.val) {
+                int curVal = cur.val;
+                while (cur != null && cur.val == curVal) {
+                    cur = cur.next;
+                }
+                pre.next = cur; // 关键步骤
+            } else {
+                pre = pre.next;
+                cur = cur.next;
+            }
+        }
+
+        return dummy.next;
     }
 
     public static void main(String[] args) {

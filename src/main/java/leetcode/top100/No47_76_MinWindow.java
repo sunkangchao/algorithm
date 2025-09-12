@@ -97,6 +97,52 @@ public class No47_76_MinWindow {
 
     }
 
+    // 20250912
+    public String minWindow2(String s, String t) {
+        // 统计t字符串中各字符出现的次数
+        Map<Character, Integer> windowMap = new HashMap<>();  // 动态扣减map
+        Map<Character, Integer> targetMap = new HashMap<>(); // 需要这样一个map来记录原始的每个字符的个数
+
+        for (int i = 0; i < t.length(); i++) {
+            char c = t.charAt(i);
+            targetMap.put(c, targetMap.getOrDefault(c, 0) + 1);
+        }
+
+        // 定义最小字符串集合 及最小长度 left right指针
+        int count = t.length();
+        int left = 0;
+        int right = 0;
+
+        String result = "";
+        int minLen = Integer.MAX_VALUE;
+
+        while (right < s.length()) {
+            char c = s.charAt(right);
+            if (targetMap.containsKey(c) && windowMap.getOrDefault(c, 0) < targetMap.get(c)) {
+                count--;
+            }
+            windowMap.put(c, windowMap.getOrDefault(c, 0) + 1);
+            right++; // 已经扣完了直接下一轮
+
+            // 否则往左边压缩left 直至不再覆盖
+            while (count == 0) {
+                if (right - left < minLen) { // 更新结果长度
+                    result = s.substring(left, right);
+                    minLen = right - left;
+                }
+                // 判断left位置字符是否在字符串t内
+                char leftChar = s.charAt(left);
+                if (targetMap.containsKey(leftChar) && windowMap.get(leftChar).intValue() == targetMap.get(leftChar).intValue()) { // bug1 leftChar写成left bug2 忽略了Integer不能使用==比较
+                    count++; // bug2
+                }
+                windowMap.put(leftChar, windowMap.get(leftChar) - 1);
+                left++;
+            }
+        }
+
+        return result;
+    }
+
     public static void main(String[] args) {
         No47_76_MinWindow obj = new No47_76_MinWindow();
         String ans = obj.minWindow("ADOBECODEBANC", "ABC");
