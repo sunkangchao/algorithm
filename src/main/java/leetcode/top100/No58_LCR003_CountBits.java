@@ -43,8 +43,7 @@ public class No58_LCR003_CountBits {
         int[] dp = new int[n + 1];
 
         for (int i = 1; i <= n; i++) {
-            int i1 = dp[i >> 1];
-            dp[i] = i1 + (i & 1);
+            dp[i] = dp[i >> 1] + (i & 1);
         }
 
         return dp;
