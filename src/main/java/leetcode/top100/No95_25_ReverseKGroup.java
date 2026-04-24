@@ -100,4 +100,41 @@ public class No95_25_ReverseKGroup {
     }
 
 
+    // 1. 组织好代码 简化无关变量
+    // 2. 清晰命名可以显著清晰思路 一共四个变量即可 pre head tail tailNext 以此命名思路就清晰多了
+    // 3. 写完一定要总体回顾一次 非常关键 形成闭环 才不至于学完就忘
+    public ListNode reverseKGroup2(ListNode head, int k) {
+        if (head == null || k <= 0) {
+            return head;
+        }
+
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode pre = dummy;
+
+        while (head != null) {
+
+            ListNode tail = pre;
+            while (tail != null && k-- > 0) {
+                tail = tail.next;
+            }
+            if (tail == null) {
+                break; // 保持不变
+            }
+            ListNode tailNext = tail.next;
+            tail.next = null; // 将其置为空 技巧1
+
+
+            pre.next = reverseList(head);
+            head.next = tailNext;
+            // 更新指针
+            pre = head;
+            head = tailNext;
+        }
+
+        return dummy.next;
+    }
+
+
+
 }

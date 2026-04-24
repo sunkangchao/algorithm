@@ -11,6 +11,7 @@ public class No98_72_MinDistance {
 
 
     // 左上角为修改，上方为增加，左方为删除
+    // 修正：20260422 左上角为修改，上方为删除，左方为增加 定转初遍反
     public int minDistance(String word1, String word2) {
         if (word1 == null || word1.length() == 0) {
             return word2.length();
