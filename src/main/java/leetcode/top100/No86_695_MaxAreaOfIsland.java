@@ -153,12 +153,12 @@ public class No86_695_MaxAreaOfIsland {
     // 并查集写法 记住它的构成要素 以及如何通过它求得结果
     static class UnionFind {
 
-        int[] parent;
+        int[] parent;  // 理解：父节点
         int[] rank;
         int count;
         int maxArea; // 增加一个字段记录最大值
 
-        UnionFind(int[][] grid) {
+        UnionFind(int[][] grid) { // 构造函数的作用就是初始化上述的各个属性值
             int m = grid.length;
             int n = grid[0].length;
             parent = new int[m * n];
@@ -169,7 +169,7 @@ public class No86_695_MaxAreaOfIsland {
                         parent[i * n + j] = i * n + j; // 父节点指向它自己
                         rank[i * n + j] = 1;
                         count++;
-                        maxArea = 1; // 保证最少会一个值
+                        maxArea = 1; // 保证最少会一个值 在存在[i,j]为1时设置
                     }
                 }
             }
@@ -182,7 +182,7 @@ public class No86_695_MaxAreaOfIsland {
             return parent[i];
         }
 
-        void union(int x, int y) {
+        void union(int x, int y) { // 实际上这个方法也是需要处理每个属性，这样就不会漏
             int px = findParent(x);
             int py = findParent(y);
             if (px != py) {
@@ -202,6 +202,13 @@ public class No86_695_MaxAreaOfIsland {
             }
         }
 
+    }
+
+
+    public static void main(String[] args) {
+        No86_695_MaxAreaOfIsland instance = new No86_695_MaxAreaOfIsland();
+        int i = instance.maxAreaOfIsland3(new int[][]{{0}});
+        System.out.println(i);
     }
 
 

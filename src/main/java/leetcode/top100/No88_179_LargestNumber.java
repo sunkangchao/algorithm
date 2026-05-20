@@ -74,6 +74,7 @@ public class No88_179_LargestNumber {
 
 
 
+    // 错误解法，long类型越界，需要转化成字符串类型
     public String largestNumber(int[] nums) {
 
         // 转化成字符串数组
@@ -115,6 +116,36 @@ public class No88_179_LargestNumber {
             sb.append(str);
         }
         return sb.toString();
+    }
+
+
+    // 1. int数组转list，list转int数组，本质都是需要转化成流
+    // 2. stream的toArray()方法，除了原始类型可以直接返回数组，引用类型返回Object数组（此时使用new XXX[]::new作为参数传入）
+    // 3. list.sort()方法没有返回值，stream.sorted()返回流本身，流操作一般带ed后缀
+    // 4. String.join("", arr), collect(Collectors.joining()), 后者分词形式joining
+    public String largestNumber3(int[] nums) {
+        // 本质上是两两拼接
+        if (nums == null || nums.length == 0) {
+            return "";
+        }
+
+        // 转化成字符串数组
+        String[] arr = Arrays.stream(nums).boxed()
+                .map(String::valueOf)
+                .toArray(String[]::new);
+
+        // 排序
+        Arrays.sort(arr, (a ,b) -> {
+            String s1 = a + b;
+            String s2 = b + a;
+            return s2.compareTo(s1);
+        });
+
+        if (arr[0].equals("0")) {
+            return "0";
+        }
+
+        return String.join("", arr);
     }
 
 

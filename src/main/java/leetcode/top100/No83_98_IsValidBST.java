@@ -2,6 +2,7 @@ package leetcode.top100;
 
 import leetcode.top100.base.TreeNode;
 
+import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.LinkedList;
 
@@ -19,40 +20,45 @@ public class No83_98_IsValidBST {
 
     // 递归解法，从上至下遍历
     public boolean isValidBST0(TreeNode root) {
-        return dfs(root, Integer.MAX_VALUE, Integer.MIN_VALUE);
+        return isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE); // 不是
     }
 
-    private boolean dfs(TreeNode root, int max, int min) {
-        if (root == null) {
+    private boolean isValidBST(TreeNode node, long left, long right) {
+        if (node == null) {
             return true;
         }
-        if (root.val >= max || root.val <= min) {
+
+        if (node.val <= left || node.val >= right) { // 需要严格大于左子树的全部节点，严格小于右子树的全部节点
             return false;
         }
-        return dfs(root.left, root.val, min) && dfs(root.right, max, root.val);
+
+        return isValidBST(node.left, left, node.val) && isValidBST(node.right, node.val, right);
     }
 
 
     // 中序遍历，迭代解法
     public boolean isValidBST1(TreeNode root) {
         if (root == null) {
-            return true;
+            return false;
         }
-        Deque<TreeNode> stack = new LinkedList<>();
+
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        TreeNode node = root; // 重命名root，使其更符合当前语义
         long lastVal = Long.MIN_VALUE;
 
-        while (root != null || !stack.isEmpty()) {
-            while (root != null) {
-                stack.push(root);
-                root = root.left;
+        while (node != null || !stack.isEmpty()) {
+            // 先把左边压到底
+            while (node != null) { // todo while写成了if 导致bug
+                stack.push(node); //
+                node = node.left;
             }
 
-            root = stack.pop();
-            if (root.val <= lastVal) {
+            TreeNode curNode = stack.pop(); // 可以认为此时是每个节点的根节点 后续打印就是中序遍历
+            if (curNode.val <= lastVal) {
                 return false;
             }
-            lastVal = root.val;
-            root = root.right;
+            lastVal = curNode.val;
+            node = curNode.right;
         }
 
         return true;

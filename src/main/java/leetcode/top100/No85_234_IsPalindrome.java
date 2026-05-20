@@ -55,17 +55,20 @@ public class No85_234_IsPalindrome {
 
     // 快慢指针
     // 反转中点（包含）后半段的链表，然后两条链表都从头遍历，依次比较是否相等。
+    // 快慢指针
     public boolean isPalindrome(ListNode head) {
-        // 1. 首先使用快慢指针 找到链表的中点
-        ListNode slow = head, fast = head;
+
+        ListNode fast = head;
+        ListNode slow = head;
+
         while (fast != null && fast.next != null) {
             fast = fast.next.next;
             slow = slow.next;
         }
-        ListNode mid = slow;
 
-        // 2. 反转中点（包含）的后续节点
-        ListNode pre = null, cur = mid;
+        // 此时slow节点为中间节点 从此开始反转链表
+        ListNode cur = slow;
+        ListNode pre = null; // 以中间节点为起始节点 不管双数节点还是单数节点 起始和结尾两个链表最后都指向null 提供对比终止条件
         while (cur != null) {
             ListNode next = cur.next;
             cur.next = pre;
@@ -73,16 +76,17 @@ public class No85_234_IsPalindrome {
             cur = next;
         }
 
-        // 3. 遍历比较是否每个节点都相等
+        // 结束时pre节点为尾部节点 此时以此比较双链表是否相等
         ListNode last = pre;
-        while (last != null) {
+        while (head != null && last != null) {
             if (head.val != last.val) {
                 return false;
             }
             head = head.next;
             last = last.next;
         }
-        return true;
+
+        return true; // 无论链表是双数节点还是单数节点 最后都会指向null节点
     }
 
 

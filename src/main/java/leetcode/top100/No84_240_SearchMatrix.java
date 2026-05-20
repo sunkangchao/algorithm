@@ -37,7 +37,7 @@ public class No84_240_SearchMatrix {
         int i = 0, j = n - 1;
 
         // 2. 循环判断
-        while (i < m && j >= 0) {
+        while (i < m && j >= 0) {  // 从左上角搜索至右下角为止
             if (matrix[i][j] == target) {
                 return true;
             }
@@ -53,4 +53,4 @@ public class No84_240_SearchMatrix {
     }
 
 
-}
+    }
