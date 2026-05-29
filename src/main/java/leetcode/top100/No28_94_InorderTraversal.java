@@ -63,6 +63,8 @@ public class No28_94_InorderTraversal {
 
         // 记住这个条件
         while (!stack.isEmpty() || root != null) {
+                // 因为每次都是先弹出当前子树的根节点 再拿到右节点 所以这个循环条件还需要增加root != null 才能符合整个树的遍历方式
+                // 如果不止是二叉树，而是多叉树，那么root == popped.right应该改成遍历一个集合（剔除第0个，从第1个开始循环）
             // 先判断自己是否为空 而不是去判断root.left
             while (root != null) {
                 stack.push(root);

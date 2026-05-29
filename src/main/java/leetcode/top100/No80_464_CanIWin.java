@@ -98,6 +98,45 @@ public class No80_464_CanIWin {
 
     }
 
+//    leetcode 20260522
+//    public boolean canIWin(int maxChoosableInteger, int desiredTotal) {
+//
+//        if (maxChoosableInteger > desiredTotal) { // 考虑的是先出手的玩家能否必赢
+//            return true;
+//        }
+//
+//        if ((maxChoosableInteger * (maxChoosableInteger + 1) / 2) < desiredTotal) { // 如果总数是满足的 以下必然会分出胜负来
+//            return false;
+//        }
+//
+//        return dfs(maxChoosableInteger, desiredTotal, 0, 0, new HashMap<>());
+//    }
+//
+//    // 起好名字可以很好防混淆 加缓存
+//    private boolean dfs(int maxChoosableInteger, int desiredTotal, int state, int curSum, Map<Integer, Boolean> cache) {
+//        if (cache.containsKey(state)) {
+//            return cache.get(state);
+//        }
+//
+//        for (int i = 1; i <= maxChoosableInteger; i++) {
+//            if ((state & (1 << i)) == 0) { // 这个数没有被挑过
+//                if (curSum + i >= desiredTotal) {
+//                    cache.put(state, true);
+//                    return true;
+//                }
+//                boolean lastAns = dfs(maxChoosableInteger, desiredTotal, state | (1 << i), curSum + i, cache);
+//                if (!lastAns) { // 如果存在选择某个数 B不是必赢的 那么对于A来说就是笔赢的 因为前面判断总和会必然分出结果
+//                    cache.put(state, true);
+//                    return true;
+//                }
+//            }
+//        }
+//
+//        // 说明到这里先手都赢不了，就是后手的赢了
+//        cache.put(state, false);
+//        return false;
+//    }
+
 
 
 }

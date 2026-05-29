@@ -21,7 +21,9 @@ public class No29_704_BinarySearch {
      */
     public int search1(int[] nums, int target) {
         int L = 0, R = nums.length - 1;
-        while (L <= R) {
+        while (L <= R) { // 这个终止条件理解，从另外的维度，因为求解中点都是偏左的（奇数取中间，偶数取中间偏左，因为向下取整了） 理解了这一点 只需要考虑极端情况下，
+                        // 仅剩两个元素时，中间值会在左侧元素上，如果再走左边，那么mid-1就小于left了；如果走右边，mid==right，还能跑。
+                        // 如果仅剩一个元素时，无论如何，走左边还是走右边也好，都是走一步，这一步必然导致left > right了。而且left == right肯定要继续跑，因为可能这个就是答案
             int mid = (L + R) / 2;
             if (target == nums[mid]) {
                 return mid;

@@ -76,6 +76,7 @@ public class No31_22_GenerateParenthesis {
         return result;
     }
 
+    // 为什么递归往往都用别的方法 因为递归的方法参数或者含义不同
     private void backtrack(String cur, int open, int close, int n, List<String> result) {
         if (cur.length() == 2 * n) {
             result.add(cur);
@@ -127,6 +128,33 @@ public class No31_22_GenerateParenthesis {
         }
     }
 
+
+    //-------------------------202660527------------------------
+
+    // 本质上跟解法二是一致的，只不过这里预先填充了右扣号，就不需要在回溯时手动填充，仅此而已
+    public List<String> generateParenthesis3(int n) {
+        List<String> result = new ArrayList<>();
+        char[] chars = new char[n * 2];
+        Arrays.fill(chars, ')');
+        backtrack(chars, 0, 0, n, result);
+        return result;
+    }
+
+    private void backtrack(char[] chars, int left, int right, int n, List<String> result) {
+        if (left == n) { // 左边填满结束 下面有条件保证生成的扣号是有效的
+            result.add(new String(chars));
+            return;
+        }
+
+        // 整个过程中保证left < right即可，最终就是有效的
+        chars[left + right] = '(';
+        backtrack(chars, left + 1, right, n, result);
+        chars[left + right] = ')';
+
+        if (left > right) {
+            backtrack(chars, left, right + 1, n, result);
+        }
+    }
 
 
     public static void main(String[] args) {

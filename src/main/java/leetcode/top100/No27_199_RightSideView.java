@@ -99,7 +99,7 @@ public class No27_199_RightSideView {
             return;
         }
         System.out.println("root = " + root.val + ", level = " + level + ", result.size = " + result.size());
-        if (level - 1 == result.size()) {
+        if (level - 1 == result.size()) { // 因为能够保证是从上往下遍历的，只要满足这个条件，一定是当前层级的右边第一个元素
             result.add(root.val);
         }
         dfs(root.right, level + 1);

@@ -34,6 +34,7 @@ public class No82_543_DiameterOfBinaryTree {
     // 提供一个求解，如何组织这个函数？什么功能？
     // 原函数行不行，为什么？原函数求解的是直径，这个函数求解的是高度，且顺便更新直径
     // 注意：最大直径等于 = 左子树高度 + 右子树高度，不用再减去2，因为左子树高度并不包含根节点本身
+    // 辅助方法不能够直接返回直径，因为子节点的直径无法推导父节点的直径，所以这里需要返回高度。然而也不想返回一个对象，那就把直径当成全局变量处理
     private int dfs(TreeNode node) {
         if (node == null) {
             return 0;
@@ -43,6 +44,7 @@ public class No82_543_DiameterOfBinaryTree {
         int rightHeight = dfs(node.right);
 
         // 知道左右高度，求解它的直径，并且返回最大高度
+        // 由高度求解当前最大长度 其实就是由节点数求解当前的线段数 显然
         maxLen = Math.max(maxLen, leftHeight + rightHeight);
         return Math.max(leftHeight, rightHeight) + 1;
     }
